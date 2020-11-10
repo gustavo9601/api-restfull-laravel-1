@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-/*
 
-Debug querys
 
-DB::listen(function ($query) {
+// Debug querys
+
+/*DB::listen(function ($query) {
     echo '<pre>' . $query->sql . '</pre>';   // consulta sql
     echo '<pre>' . $query->time . '</pre>';  // tiempo en retornar el servidor
 });*/
