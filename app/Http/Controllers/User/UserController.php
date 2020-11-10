@@ -26,11 +26,11 @@ class UserController extends ApiController
         return $this->showAll($usuarios);
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $usuario = User::findOrFail($id);
+        // $usuario = User::findOrFail($id);
         // return response()->json(['data' => $usuario], 200);
-        return $this->showOne($usuario);
+        return $this->showOne($user);
     }
 
     public function store(Request $request)
@@ -54,12 +54,11 @@ class UserController extends ApiController
         return $this->showOne($usuario, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        $usuario = User::findOrFail($id);
         // No es necesario que sean requeridos, ya que se puede actualizar uno o mas campos
         $rules = [
-            'email' => 'email|unique:users,email,' . $usuario->id, // la validacion de unique, descarta el id actual para la columna email
+            'email' => 'email|unique:users,email,' . $user->id, // la validacion de unique, descarta el id actual para la columna email
             'password' => 'min:6|confirmed',
             'admin' => 'in:' . User::USUARIO_ADMINISTRADOR . ',' . User::USUARIO_REGULAR  // Debe incluir alguno de los valores pasados
         ];
@@ -67,52 +66,51 @@ class UserController extends ApiController
         $this->validate($request, $rules);
 
         if ($request->has('name')) {
-            $usuario->name = $request->input('name');
+            $user->name = $request->input('name');
         }
 
         if ($request->has('email')) {
             // Si el correo es diferente del ya usado
             // se genera un nuevo token y pasa a ser no verificado
-            if ($usuario->email != $request->input('email')) {
-                $usuario->verified = User::USUARIO_NO_VERIFICADO;
-                $usuario->verification_token = User::generarVerificationToken();
+            if ($user->email != $request->input('email')) {
+                $user->verified = User::USUARIO_NO_VERIFICADO;
+                $user->verification_token = User::generarVerificationToken();
             }
-            $usuario->email = $request->input('email');
+            $user->email = $request->input('email');
         }
 
         if ($request->has('password')) {
-            $usuario->password = $request->input('password');
+            $user->password = $request->input('password');
         }
 
         if ($request->has('admin')) {
             // Si no esta verificado el usuario no puede modificar el admin
-            if (!$usuario->esVerificado()) {
+            if (!$user->esVerificado()) {
                 // return response()->json(['error' => 'Unicamente los usuarios verificados pueden cambiar su valor de administrador', 'code' => 409], 409);
                 return $this->errorResponse('Unicamente los usuarios verificados pueden cambiar su valor de administrador', 409);
             }
-            $usuario->admin = $request->admin;
+            $user->admin = $request->admin;
         }
 
         // Verifica si alguno de los valores iniciales, sufrio algun cambio
 
-        if (!$usuario->isDirty()) {
+        if (!$user->isDirty()) {
             // return response()->json(['error' => 'Se debe especificar al menos un valor diferente para actualizar', 'code' => 422], 422);
             return $this->errorResponse('Se debe especificar al menos un valor diferente para actualizar', 422);
         }
 
         // Actualiza
-        $usuario->save();
+        $user->save();
 
-        // return response()->json(['data' => $usuario], 200);
-        return $this->showOne($usuario, 200);
+        // return response()->json(['data' => $user], 200);
+        return $this->showOne($user, 200);
     }
 
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $usuario = User::findOrFail($id);
-        $usuario->delete();
+        $user->delete();
         // return response()->json(['data' => $usuario], 200);
-        return $this->showOne($usuario, 200);
+        return $this->showOne($user, 200);
     }
 
 }

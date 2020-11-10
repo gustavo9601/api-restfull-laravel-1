@@ -22,15 +22,17 @@ class BuyerController extends ApiController
     public function index()
     {
         // con has pregunta si tiene trabsaccionts
-        $buyers = Buyer::has('transactions')->get();
+        // $buyers = Buyer::has('transactions')->get();
         // return response()->json(['data' => $buyers], 200);
+
+        $buyers = Buyer::all();  // El global scope limita a que solo sean compradores
         return $this->showAll($buyers);
     }
 
-    public function show($id)
+    public function show(Buyer $buyer)
     {
         // Primero verifica que tenga transactions y despues que exista
-        $buyer = Buyer::has('transactions')->findOrFail($id);
+        // $buyer = Buyer::has('transactions')->findOrFail($id);
 
         // return response()->json(['data' => $buyer], 200);
         return $this->showOne($buyer);

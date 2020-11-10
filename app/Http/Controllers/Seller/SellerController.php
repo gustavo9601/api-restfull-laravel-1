@@ -23,14 +23,15 @@ class SellerController extends ApiController
     public function index()
     {
         // con has pregunta si tiene products
-        $sellers = Seller::has('products')->get();
+        // $sellers = Seller::has('products')->get();
+        $sellers = Seller::all();  // El global scope limita a solo lo que tenga products
         return $this->showAll($sellers);
     }
 
-    public function show($id)
+    public function show(Seller $seller)
     {
         // Primero verifica que tenga products y despues que exista
-        $seller = Seller::has('products')->findOrFail($id);
+        // $seller = Seller::has('products')->findOrFail($id);
 
         return $this->showOne($seller);
     }
