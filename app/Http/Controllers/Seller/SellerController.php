@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Seller;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ApiController;
+use App\Seller;
 use Illuminate\Http\Request;
 
-class SellerController extends Controller
+class SellerController extends ApiController
 {
     /**
      * Handle the incoming request.
@@ -16,5 +17,21 @@ class SellerController extends Controller
     public function __invoke(Request $request)
     {
         //
+    }
+
+
+    public function index()
+    {
+        // con has pregunta si tiene products
+        $sellers = Seller::has('products')->get();
+        return $this->showAll($sellers);
+    }
+
+    public function show($id)
+    {
+        // Primero verifica que tenga products y despues que exista
+        $seller = Seller::has('products')->findOrFail($id);
+
+        return $this->showOne($seller);
     }
 }

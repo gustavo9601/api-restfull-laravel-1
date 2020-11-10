@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+
+
     // verified
     const USUARIO_VERIFICADO = '1';
     const USUARIO_NO_VERIFICADO = '0';
@@ -58,5 +60,22 @@ class User extends Authenticatable
     public static function generarVerificationToken(){
         return Str::random(40);
     }
-    
+
+    public function setPasswordAttribute($value){
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function setNameAttribute($value){
+        $this->attributes['name'] = strtolower($value);
+    }
+
+    public function setEmailAttribute($value){
+        $this->attributes['email'] = strtolower($value);
+    }
+
+    public function getNameAttribute($valor){
+        //return ucfirst($valor);
+        return ucwords($valor);
+    }
+
 }

@@ -20,7 +20,7 @@ class Product extends Model
     }
 
     // un producto tiene muchas categorias
-    public function products(){
+    public function categories(){
         return $this->belongsToMany(Category::class);
     }
 
