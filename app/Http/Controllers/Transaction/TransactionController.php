@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Http\Controllers\ApiController;
-use Illuminate\Http\Request;
+use App\Transaction;
 
 class TransactionController extends ApiController
 {
@@ -13,8 +13,21 @@ class TransactionController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request)
+    public function index()
     {
-        //
+        $transactions = Transaction::all();
+
+        return $this->showAll($transactions);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Transaction  $transaction
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Transaction $transaction)
+    {
+        return $this->showOne($transaction);
     }
 }
