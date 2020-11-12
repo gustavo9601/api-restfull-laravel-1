@@ -40,7 +40,8 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+            'signature:X-Application-Name',
+            'throttleCustom:60,1',   // Personalizando el middleware
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -61,7 +62,9 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        //'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'signature' => \App\Http\Middleware\SignatureMiddleware::class,
+        'throttleCustom' => \App\Http\Middleware\CustomThrottleRequest::class
     ];
 }
