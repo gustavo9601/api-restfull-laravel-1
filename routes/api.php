@@ -133,3 +133,7 @@ Route::apiResource('sellers.products', 'Seller\SellerProductController')
  * Users
  * */
 Route::apiResource('users', 'User\UserController');
+// Verificar el token cuando se crea una cuenta
+Route::get('users/verify/{token}', 'User\UserController@verify')->name('verify');
+// permite enviar un token de nuevo
+Route::get('users/{user}/resend', 'User\UserController@resend')->name('resend');

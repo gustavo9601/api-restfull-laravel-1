@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
+use App\Mail\UserCreated;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends ApiController
 {
@@ -113,4 +115,33 @@ class UserController extends ApiController
         return $this->showOne($user, 200);
     }
 
+
+    public function verify($token)
+    {
+        // Consultamos en la bd si existe el registro por el token, en caso contrario falla el request
+        $user = User::where('verification_token', $token)->firstOrFail();
+
+        // Actualiza el estado a verificado, y remueve el token
+        $user->verified = User::USUARIO_VERIFICADO;
+        $user->verification_token = null;
+
+        $user->save();
+
+        return $this->showMessage('Usuario verificado');
+
+    }
+
+    public function resend(User $user){
+        // Si ya esta verificada la cuenta no es necesario volver a enviar el email
+        if ($user->esVerificado()){
+            return $this->errorResponse('Este usuario ya ha sido verificado', 409);
+        }
+
+        retry(5, function () use ($user){
+            Mail::to($user->email)->send(new UserCreated($user));
+        }, 200);
+
+
+        return $this->showMessage('El Correo de verificacion se ha reenviado');
+    }
 }

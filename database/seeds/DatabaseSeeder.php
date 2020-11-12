@@ -22,9 +22,14 @@ class DatabaseSeeder extends Seeder
         $cantidadProducts = 100;
         $cantidadTransacciones = 500;
 
+        // Omitiendo eventos creados manual mente en el AppServiceProvider para el Modelo en mension
+        User::flushEventListeners();
+        Category::flushEventListeners();
+        Product::flushEventListeners();
+        Transaction::flushEventListeners();
+
         factory(User::class, $cantidadUsuarios)->create();
         factory(Category::class, $cantidadCategorias)->create();
-
 
         factory(Product::class, $cantidadProducts)->create()->each(
             function ($product) {
