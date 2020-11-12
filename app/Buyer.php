@@ -3,9 +3,14 @@
 namespace App;
 
 use App\Scopes\BuyerScope;
+use App\Transformers\BuyerTransformer;
+
 
 class Buyer extends User
 {
+    // Especificando la transformacion
+    public $transformer = BuyerTransformer::class;
+
     // Inicializa el modelo, para especificarle que scropes usar
     protected static function boot()
     {

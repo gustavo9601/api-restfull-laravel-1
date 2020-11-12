@@ -165,6 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
+        // Registrando Spatie Fractal para las repuestas de recursos
+        Spatie\Fractal\FractalServiceProvider::class,
 
         /*
          * Application Service Providers...

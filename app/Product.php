@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transformers\ProductTransformer;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,6 +15,9 @@ class Product extends Model
     // status product
     const PRODUCTO_DISPONIBLE = 'disponible';
     const PRODUCTO_NO_DISPONIBLE = 'no disponible';
+
+    // Especificando la transformacion
+    public $transformer = ProductTransformer::class;
 
     protected $fillable = [
         'name', 'description', 'quantity', 'status', 'image', 'seller_id'

@@ -3,11 +3,16 @@
 namespace App;
 
 use App\Scopes\SellerScope;
+use App\Transformers\SellerTransformer;
+
 
 class Seller extends User
 {
 
     protected $table = 'users';
+
+    // Especificando la transformacion
+    public $transformer = SellerTransformer::class;
 
     protected static function boot()
     {

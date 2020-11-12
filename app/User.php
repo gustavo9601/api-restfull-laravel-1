@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Transformers\UserTransformer;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,6 +50,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    // Especificando la transformacion
+    public $transformer = UserTransformer::class;
+
     // devuelve boolean si esta verficado el usuario
     public function esVerificado(){
         return $this->verified == self::USUARIO_VERIFICADO;
@@ -79,5 +84,6 @@ class User extends Authenticatable
         //return ucfirst($valor);
         return ucwords($valor);
     }
+
 
 }
