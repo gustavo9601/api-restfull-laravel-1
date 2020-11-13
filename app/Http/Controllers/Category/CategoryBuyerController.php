@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class CategoryBuyerController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index(Category $category)
     {
         $buyers = $category->products()

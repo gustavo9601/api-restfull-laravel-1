@@ -137,3 +137,8 @@ Route::apiResource('users', 'User\UserController');
 Route::get('users/verify/{token}', 'User\UserController@verify')->name('verify');
 // permite enviar un token de nuevo
 Route::get('users/{user}/resend', 'User\UserController@resend')->name('resend');
+
+
+
+// Sobrescribiendo la rutas propias de Passport
+Route::post('oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');

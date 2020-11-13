@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 
 class TransactionCategoryController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+
+        $this->middleware(['client.credentials'])->only(['index']);
+    }
+
     public function index(Transaction $transaction)
     {
         // Accediendo a las categorias a travez del product

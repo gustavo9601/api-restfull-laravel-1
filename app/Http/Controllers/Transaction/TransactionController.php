@@ -7,12 +7,11 @@ use App\Transaction;
 
 class TransactionController extends ApiController
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index()
     {
         $transactions = Transaction::all();

@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class BuyerProductController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index(Buyer $buyer)
     {
         // Al usar () en la relacion, retorna objeto de QueryBuilder y no la relacion

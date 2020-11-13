@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Genera las rutas propias de passport
+        Passport::routes();
+
+        // Definiendo el tiempo de expiracion de tokens
+        // Le definimos la fecha en que expirara el token, al igual al refresh
+        Passport::tokensExpireIn(Carbon::now()->addMinutes(30));
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
     }
 }

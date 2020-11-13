@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class CategoryTransactionController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function index(Category $category)
     {
         $transactions = $category->products()

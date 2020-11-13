@@ -14,7 +14,9 @@ class UserController extends ApiController
 
     public function __construct()
     {
-        parent::__construct();
+        // Permite acceso general a cualquier cliente con token, "no es lo mismo que a un usuario"
+        $this->middleware(['client.credentials'])->only(['store', 'resend']);
+        $this->middleware(['auth:api'])->except(['store', 'resend', 'verify']);
 
         // Middleware de trasnformacion de respuestas y obtencion de la data
         // $this->middleware(['transform.input:' . UserTransformer::class])->only(['store', 'update']);

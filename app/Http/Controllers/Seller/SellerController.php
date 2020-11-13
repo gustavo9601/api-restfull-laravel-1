@@ -8,12 +8,11 @@ use Illuminate\Http\Request;
 
 class SellerController extends ApiController
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function __invoke(Request $request)
     {
         //

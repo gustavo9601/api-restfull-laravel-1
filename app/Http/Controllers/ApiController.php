@@ -12,5 +12,7 @@ class ApiController extends Controller
 
     public function __construct()
     {
+        // Usando en el Padre al Middleware de Api
+        $this->middleware('auth:api');
     }
 }
