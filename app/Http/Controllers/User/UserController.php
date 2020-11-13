@@ -4,21 +4,21 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\ApiController;
 use App\Mail\UserCreated;
+use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends ApiController
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function __invoke(Request $request)
+
+    public function __construct()
     {
-        //
+        parent::__construct();
+
+        // Middleware de trasnformacion de respuestas y obtencion de la data
+        // $this->middleware(['transform.input:' . UserTransformer::class])->only(['store', 'update']);
+
     }
 
     public function index()

@@ -65,6 +65,7 @@ class Kernel extends HttpKernel
         //'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'signature' => \App\Http\Middleware\SignatureMiddleware::class,
-        'throttleCustom' => \App\Http\Middleware\CustomThrottleRequest::class
+        'throttleCustom' => \App\Http\Middleware\CustomThrottleRequest::class,
+        'transform.input' => \App\Http\Middleware\TransformInput::class,
     ];
 }

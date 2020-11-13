@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Controllers\Controller;
 use App\Product;
 use App\Seller;
+use App\Transformers\ProductTransformer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -13,11 +13,15 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SellerProductController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Middleware de trasnformacion de respuestas y obtencion de la data
+        // $this->middleware(['transform.input:' . ProductTransformer::class])->only(['store', 'update']);
+
+    }
+
     public function index(Seller $seller)
     {
         $products = $seller->products;
