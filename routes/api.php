@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 
 // Debug querys
-
-/*DB::listen(function ($query) {
+/*
+DB::listen(function ($query) {
     dump($query->sql);
     dump($query->time);
 });*/

@@ -19,6 +19,9 @@ class ProductBuyerTransactionController extends ApiController
         // Middleware de trasnformacion de respuestas y obtencion de la data
         // $this->middleware(['transform.input:' . TransactionTransformer::class])->only(['store']);
 
+        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
+        $this->middleware(['scope:purchase-product'])->only(['store']);
+
     }
     /**
      * Store a newly created resource in storage.

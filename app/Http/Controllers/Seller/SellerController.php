@@ -11,6 +11,10 @@ class SellerController extends ApiController
     public function __construct()
     {
         parent::__construct();
+
+
+        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
+        $this->middleware(['scope:read-general'])->only(['show']);
     }
 
     public function __invoke(Request $request)

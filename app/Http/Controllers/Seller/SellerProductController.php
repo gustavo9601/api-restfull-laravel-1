@@ -7,6 +7,7 @@ use App\Product;
 use App\Seller;
 use App\Transformers\ProductTransformer;
 use App\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -20,13 +21,25 @@ class SellerProductController extends ApiController
         // Middleware de trasnformacion de respuestas y obtencion de la data
         // $this->middleware(['transform.input:' . ProductTransformer::class])->only(['store', 'update']);
 
+        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
+        $this->middleware(['scope:manage-products'])->except(['index']);
+
     }
 
     public function index(Seller $seller)
     {
-        $products = $seller->products;
+        // dd(request()->user());
+        // Verificacion de token de cliente
+        // ->tokenCan('read-general') verifica si contiene el tokensCan del AuthServiceProvider pasado por parametro
+        if (request()->user()->tokenCan('read-general') || request()->user()->tokenCan('manage-products')){
+            $products = $seller->products;
 
-        return $this->showAll($products);
+            return $this->showAll($products);
+        }
+
+        // Lanzara una exepcion de AUtenticacion
+        throw new AuthenticationException;
+
     }
 
     /**

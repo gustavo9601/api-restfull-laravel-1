@@ -32,10 +32,19 @@ class AuthServiceProvider extends ServiceProvider
 
         // Definiendo el tiempo de expiracion de tokens
         // Le definimos la fecha en que expirara el token, al igual al refresh
-        Passport::tokensExpireIn(Carbon::now()->addMinutes(1));
+        Passport::tokensExpireIn(Carbon::now()->addMinutes(30));
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
 
         // Habilitando el gran type implicito
         // Passport::enableImplicitGrant();
+
+        // Habilitando Scopes para clientes
+        Passport::tokensCan([  // Cada posicion son las habilidades, que podra realizar el cliente
+            'purchase-product' => 'Crear transaciones para comprar productos determinados',
+            'manage-products' => 'Crear, ver, actualizar y eliminar productos',
+            'manage-account' => 'Obtener informacion de la cuenta, nombre, email, estado, modificar datos como email nomrnbre y contraseña',
+            'read-general' => 'Obtener informacion, general, categorias donde se compra y vende, productos vendidos o comprados, transacciones, compras, y ventas'
+        ]);
+
     }
 }

@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class BuyerController extends ApiController
 {
-    /**
-     * Handle the incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        parent::__construct();
+        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
+        $this->middleware(['scope:read-general'])->only(['index']);
+    }
+
     public function __invoke(Request $request)
     {
         //

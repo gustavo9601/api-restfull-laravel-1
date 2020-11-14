@@ -21,6 +21,9 @@ class UserController extends ApiController
         // Middleware de trasnformacion de respuestas y obtencion de la data
         // $this->middleware(['transform.input:' . UserTransformer::class])->only(['store', 'update']);
 
+
+        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
+        $this->middleware(['scope:manage-account'])->only(['show', 'update']);
     }
 
     public function index()

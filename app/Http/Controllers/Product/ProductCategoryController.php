@@ -15,6 +15,9 @@ class ProductCategoryController extends ApiController
 
         $this->middleware(['client.credentials'])->only(['index']);
         $this->middleware(['auth:api'])->except(['index']);
+
+        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
+        $this->middleware(['scope:manage-products'])->except(['index']);
     }
 
     public function index(Product $product)
