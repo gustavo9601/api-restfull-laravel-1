@@ -67,7 +67,7 @@ class Kernel extends HttpKernel
         //'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'throttle' => \App\Http\Middleware\CustomThrottleRequest::class,
         'transform.input' => \App\Http\Middleware\TransformInput::class,
-        // Middlewares de passport
+        // Middlewares de passport -> Token Basico de CLiente
         'client.credentials' => \Laravel\Passport\Http\Middleware\CheckClientCredentials::class,
     ];
 }

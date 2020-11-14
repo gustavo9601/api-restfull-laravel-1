@@ -32,7 +32,10 @@ class AuthServiceProvider extends ServiceProvider
 
         // Definiendo el tiempo de expiracion de tokens
         // Le definimos la fecha en que expirara el token, al igual al refresh
-        Passport::tokensExpireIn(Carbon::now()->addMinutes(30));
+        Passport::tokensExpireIn(Carbon::now()->addMinutes(1));
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+
+        // Habilitando el gran type implicito
+        // Passport::enableImplicitGrant();
     }
 }
