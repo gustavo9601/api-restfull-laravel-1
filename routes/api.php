@@ -132,11 +132,15 @@ Route::apiResource('sellers.products', 'Seller\SellerProductController')
 /*
  * Users
  * */
+// Devuelve que usuario es el dueño del token
+Route::get('users/me', 'User\UserController@me')->name('me');
+
 Route::apiResource('users', 'User\UserController');
 // Verificar el token cuando se crea una cuenta
 Route::get('users/verify/{token}', 'User\UserController@verify')->name('verify');
 // permite enviar un token de nuevo
 Route::get('users/{user}/resend', 'User\UserController@resend')->name('resend');
+
 
 
 

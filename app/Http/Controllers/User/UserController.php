@@ -17,7 +17,6 @@ class UserController extends ApiController
         // Permite acceso general a cualquier cliente con token, "no es lo mismo que a un usuario"
         $this->middleware(['client.credentials'])->only(['store', 'resend']);
         $this->middleware(['auth:api'])->except(['store', 'resend', 'verify']);
-
         // Middleware de trasnformacion de respuestas y obtencion de la data
         // $this->middleware(['transform.input:' . UserTransformer::class])->only(['store', 'update']);
 
@@ -162,4 +161,10 @@ class UserController extends ApiController
 
         return $this->showMessage('El Correo de verificacion se ha reenviado');
     }
+
+    public function me(Request $request){
+        $currentUserFromToken = $request->user();
+        return $this->showOne($currentUserFromToken);
+    }
+
 }
