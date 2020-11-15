@@ -16,6 +16,8 @@ class SellerCategoryController extends ApiController
 
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:read-general'])->only(['index']);
+
+        $this->middleware(['can:view,seller'])->only(['index']);
     }
 
     public function index(Seller $seller)

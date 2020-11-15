@@ -16,6 +16,10 @@ class ProductTransactionController extends ApiController
 
     public function index(Product $product)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $transactions = $product->transactions;
 
         return $this->showAll($transactions);

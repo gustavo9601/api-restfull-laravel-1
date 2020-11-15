@@ -13,8 +13,6 @@ class CategoryController extends ApiController
 
     public function __construct()
     {
-
-
         // Middleware de trasnformacion de respuestas y obtencion de la data
         // $this->middleware(['transform.input:' . CategoryTransformer::class])->only(['store', 'update']);
 
@@ -38,6 +36,10 @@ class CategoryController extends ApiController
      */
     public function store(Request $request)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $rules = [
             'name' => 'required',
             'description' => 'required',
@@ -72,6 +74,10 @@ class CategoryController extends ApiController
     public function update(Request $request, Category $category)
     {
 
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         // only recibe los parametros que se quieren usar en el request, los demas se descartan
         $category->fill($request->only(['name', 'description']));
 
@@ -94,6 +100,10 @@ class CategoryController extends ApiController
      */
     public function destroy(Category $category)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $category->delete();
 
         return $this->showOne($category);

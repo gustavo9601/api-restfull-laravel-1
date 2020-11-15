@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Buyer;
+use App\Policies\BuyerPolicy;
+use App\Policies\ProductPolicy;
+use App\Policies\SellerPolicy;
+use App\Policies\TansactionPolicy;
+use App\Policies\UserPolicy;
+use App\Product;
+use App\Seller;
+use App\Transaction;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -16,6 +26,11 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
+        Buyer::class => BuyerPolicy::class,
+        Seller::class => SellerPolicy::class,
+        User::class => UserPolicy::class,
+        Transaction::class => TansactionPolicy::class,
+        Product::class => ProductPolicy::class
     ];
 
     /**
@@ -32,7 +47,7 @@ class AuthServiceProvider extends ServiceProvider
 
         // Definiendo el tiempo de expiracion de tokens
         // Le definimos la fecha en que expirara el token, al igual al refresh
-        Passport::tokensExpireIn(Carbon::now()->addMinutes(30));
+        Passport::tokensExpireIn(Carbon::now()->addHour(30));
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
 
         // Habilitando el gran type implicito
@@ -45,6 +60,12 @@ class AuthServiceProvider extends ServiceProvider
             'manage-account' => 'Obtener informacion de la cuenta, nombre, email, estado, modificar datos como email nomrnbre y contraseña',
             'read-general' => 'Obtener informacion, general, categorias donde se compra y vende, productos vendidos o comprados, transacciones, compras, y ventas'
         ]);
+
+
+        // Definiendo gate
+        Gate::define('admin-action', function (User $user){
+            return $user->esAdministrador();
+        });
 
     }
 }

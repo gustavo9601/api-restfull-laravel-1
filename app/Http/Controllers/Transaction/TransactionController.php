@@ -14,10 +14,16 @@ class TransactionController extends ApiController
 
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:read-general'])->only(['show']);
+
+        $this->middleware(['can:view,transaction'])->only(['show']);
     }
 
     public function index()
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $transactions = Transaction::all();
 
         return $this->showAll($transactions);

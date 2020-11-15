@@ -16,6 +16,10 @@ class ProductBuyerController extends ApiController
 
     public function index(Product $product)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $buyers = $product->transactions()
             ->with(['buyer'])
             ->get()

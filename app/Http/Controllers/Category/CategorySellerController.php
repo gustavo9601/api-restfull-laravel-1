@@ -16,6 +16,10 @@ class CategorySellerController extends ApiController
 
     public function index(Category $category)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $sellers = $category->products()
             ->with(['seller'])
             ->get()

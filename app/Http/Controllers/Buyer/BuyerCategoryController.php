@@ -15,10 +15,17 @@ class BuyerCategoryController extends ApiController
 
        // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
        $this->middleware(['scope:read-general'])->only(['index']);
+
+       // can  // verifica policy registrado en el AuthServiceProvider
+       // view // es la funcion del policie
+       // buyer es un instancia de Buyer, se puede pasar asi, ya que es el mismo nombre que se recibe en el path
+       $this->middleware('can:view,buyer')->only(['index']);
    }
 
     public function index(Buyer $buyer)
     {
+
+
         $categories = $buyer->transactions()
             ->with('product.categories') // product model => categories relacion // trea la coleccion de productos con sus categorias
             ->get()

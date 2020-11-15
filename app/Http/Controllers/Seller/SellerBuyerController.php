@@ -18,6 +18,10 @@ class SellerBuyerController extends ApiController
 
     public function index(Seller $seller)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $buyers = $seller->products()
             ->whereHas('transactions')
             ->with('transactions.buyer')

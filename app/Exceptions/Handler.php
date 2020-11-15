@@ -79,7 +79,7 @@ class Handler extends ExceptionHandler
 
         // Exepcion de autorizacion
         if ($exception instanceof AuthorizationException) {
-            return $this->errorResponse('No posee permisos para ejecutar esta accion', 403);
+            return $this->errorResponse('No posee permisos para ejecutar esta accion - ' . $exception->getMessage(), 403);
         }
 
         // Exepcion de pagina no encontrada

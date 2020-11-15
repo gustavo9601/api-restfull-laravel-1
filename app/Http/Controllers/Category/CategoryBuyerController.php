@@ -16,6 +16,10 @@ class CategoryBuyerController extends ApiController
 
     public function index(Category $category)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $buyers = $category->products()
             ->whereHas('transactions')
             ->with(['transactions.buyer'])

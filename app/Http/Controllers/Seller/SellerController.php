@@ -15,6 +15,8 @@ class SellerController extends ApiController
 
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:read-general'])->only(['show']);
+
+        $this->middleware(['can:view,seller'])->only(['show']);
     }
 
     public function __invoke(Request $request)
@@ -25,6 +27,10 @@ class SellerController extends ApiController
 
     public function index()
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         // con has pregunta si tiene products
         // $sellers = Seller::has('products')->get();
         $sellers = Seller::all();  // El global scope limita a solo lo que tenga products

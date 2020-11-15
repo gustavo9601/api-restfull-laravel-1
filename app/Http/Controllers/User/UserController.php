@@ -24,10 +24,18 @@ class UserController extends ApiController
 
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:manage-account'])->only(['show', 'update']);
+
+        $this->middleware(['can:view,user'])->only(['show']);
+        $this->middleware(['can:update,user'])->only(['update']);
+        $this->middleware(['can:destroy,user'])->only(['destroy']);
     }
 
     public function index()
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $usuarios = User::all();
         // return response()->json(['data' => $usuarios], 200);
         return $this->showAll($usuarios);
@@ -91,6 +99,11 @@ class UserController extends ApiController
         }
 
         if ($request->has('admin')) {
+
+            // Usando el Gate definido en el padre y heradedado a este controlller
+            // Solo un admin puede actualizar a otro usuario como admin
+            $this->allowedAminAction();
+
             // Si no esta verificado el usuario no puede modificar el admin
             if (!$user->esVerificado()) {
                 // return response()->json(['error' => 'Unicamente los usuarios verificados pueden cambiar su valor de administrador', 'code' => 409], 409);

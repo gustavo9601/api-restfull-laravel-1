@@ -24,6 +24,14 @@ class SellerProductController extends ApiController
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:manage-products'])->except(['index']);
 
+        // Usando los policias
+        // seller el el id o modelo recibido en el path con el mismo nombre
+        // edit-product => editProduct en el policy
+        // delete-product => deleteProduct en el policy
+        $this->middleware(['can:view,seller'])->only(['index']);
+        $this->middleware(['can:sale,seller'])->only(['store']);
+        $this->middleware(['can:edit-product,seller'])->only(['update']);
+        $this->middleware(['can:delete-product,seller'])->only(['destroy']);
     }
 
     public function index(Seller $seller)

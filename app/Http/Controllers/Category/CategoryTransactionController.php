@@ -16,6 +16,10 @@ class CategoryTransactionController extends ApiController
 
     public function index(Category $category)
     {
+
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $transactions = $category->products()
             ->whereHas('transactions')  // verifica que la relacion retorne por lo menos 1 dato y no continua si es nulo
             ->with(['transactions'])

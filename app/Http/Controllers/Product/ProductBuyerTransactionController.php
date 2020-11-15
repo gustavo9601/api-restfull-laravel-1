@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Buyer;
 use App\Http\Controllers\ApiController;
 use App\Product;
 use App\Transaction;
-use App\Transformers\TransactionTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -22,19 +22,23 @@ class ProductBuyerTransactionController extends ApiController
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:purchase-product'])->only(['store']);
 
+        // can  // verifica policy registrado en el AuthServiceProvider
+        // purchase // es la funcion del policie
+        // buyer es un instancia de Buyer, se puede pasar asi, ya que es el mismo nombre que se recibe en el path
+        $this->middleware(['can:purchase,buyer'])->only(['store']);
     }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Product $product, User $buyer)
+    public function store(Request $request, Product $product, Buyer $buyer)
     {
         $rules = [
             'quantity' => 'required|integer|min:1'
         ];
-
 
         // No puede comprar el producto de quien lo vende
         if ($buyer->id == $product->seller_id) {
@@ -63,9 +67,8 @@ class ProductBuyerTransactionController extends ApiController
         }
 
 
-
         // Usando una transacion para asegurar el query
-        return \DB::transaction(function () use ($request, $product, $buyer){
+        return \DB::transaction(function () use ($request, $product, $buyer) {
             //  Reducir la cantidad disponible del producto
             $product->quantity -= $request->quantity;
             // actualiza el inventario en la bd

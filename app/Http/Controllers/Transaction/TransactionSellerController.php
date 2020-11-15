@@ -14,6 +14,8 @@ class TransactionSellerController extends ApiController
 
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:read-general'])->only(['index']);
+
+        $this->middleware(['can:view,transaction'])->only(['index']);
     }
 
     public function index(Transaction $transaction)

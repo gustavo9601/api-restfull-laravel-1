@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Buyer;
 use App\Buyer;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class BuyerSellerController extends ApiController
@@ -16,6 +18,9 @@ class BuyerSellerController extends ApiController
 
     public function index(Buyer $buyer)
     {
+        // Usando el Gate definido en el padre y heradedado a este controlller
+        $this->allowedAminAction();
+
         $sellers = $buyer->transactions()
             ->with('product.seller') // product model => seller relacion // trea la coleccion de productos con su vendedor
             ->get()

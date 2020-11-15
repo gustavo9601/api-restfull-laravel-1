@@ -18,6 +18,9 @@ class ProductCategoryController extends ApiController
 
         // Usamos el scope de Passport, y le pasamos en comas, los scopes a usar y validar
         $this->middleware(['scope:manage-products'])->except(['index']);
+
+        $this->middleware(['can:add-category,product'])->only(['update']);
+        $this->middleware(['can:delete-category,product'])->only(['destroy']);
     }
 
     public function index(Product $product)
