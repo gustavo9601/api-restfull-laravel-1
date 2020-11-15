@@ -17,9 +17,9 @@ return [
 
     'paths' => ['api/*'],
 
-    'allowed_methods' => ['*'],
+    'allowed_methods' => ['*'], // ['GET', 'POST']
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*'], // ['DOMAIM.COM', 'IP ADDRESS']
 
     'allowed_origins_patterns' => [],
 

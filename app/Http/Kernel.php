@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            \Fruitcake\Cors\HandleCors::class,
             'signature:X-Application-Name',
             'throttle:60,1',   // Personalizando el middleware
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
